@@ -209,25 +209,33 @@
     t.addEventListener('click', () => showGuests(t.dataset.ban));
   });
 
-  function traCuu() {
-    document.querySelectorAll('.table').forEach(t => t.classList.remove('highlight'));
-    document.getElementById('guestList').style.display = 'none';
+ <script>
+function traCuu() {
+  // Xóa highlight cũ
+  document.querySelectorAll('.table').forEach(t => t.classList.remove('highlight'));
+  document.getElementById('guestList').style.display = 'none';
 
-    const user = document.getElementById('username').value.trim().toLowerCase();
-    const info = userMap[user];
+  const user = document.getElementById('username').value.trim().toLowerCase();
+  const info = userMap[user];
 
-    if (!info) {
-      document.getElementById('result').innerHTML = '❌ Không tìm thấy thông tin';
-      return;
-    }
-
-    const ban = info.ban;
-    const lucky = info.lucky;
-    const table = document.querySelector(`.table[data-ban="${ban}"]`);
-    if (table) table.classList.add('highlight');
-
-    document.getElementById('result').innerHTML = `🎉 <b>${user}</b> – Bàn <b>${ban}</b><br>🍀 Số may mắn: <b>${lucky || '—'}</b><br>👉 Nhấn vào bàn để xem danh sách khách`;
+  if (!info) {
+    document.getElementById('result').innerHTML = '❌ Không tìm thấy thông tin';
+    return;
   }
+
+  const ban = info.ban;
+  const lucky = info.lucky;
+
+  const table = document.querySelector(`.table[data-ban="${ban}"]`);
+  if (table) table.classList.add('highlight');
+
+  document.getElementById('result').innerHTML = `
+    🎉 <b>${user}</b> – Bàn <b>${ban}</b><br>
+    🍀 Số may mắn: <b>${lucky || '—'}</b><br>
+    👉 Nhấn vào bàn để xem danh sách khách
+  `;
+}
+</script>
 
   function showGuests(ban) {
     const list = guestsByTable[ban] || [];
