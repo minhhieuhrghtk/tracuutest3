@@ -5,32 +5,151 @@
   <title>Tra cứu bàn tiệc</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body { font-family: 'Segoe UI', Tahoma, sans-serif; background: radial-gradient(circle at top, #fdf2f8, #c7d2fe); min-height: 100vh; margin: 0; display: flex; justify-content: center; align-items: center; }
-    .container { background: #ffffff; max-width: 560px; width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); overflow: hidden; }
-    header { background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; padding: 18px; text-align: center; }
-    .content { padding: 18px; }
-    input, button { width: 100%; padding: 12px; font-size: 16px; border-radius: 12px; border: 1px solid #d1d5db; box-sizing: border-box; }
-    button { margin-top: 10px; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none; cursor: pointer; }
-    .result { margin-top: 10px; text-align:center; }
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: #ffffff;
+      max-width: 600px;
+      width: 100%;
+      border-radius: 24px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+      overflow: hidden;
+    }
+
+    header {
+      background: linear-gradient(135deg, #16a34a, #22c55e);
+      color: white;
+      padding: 24px;
+      text-align: center;
+    }
+
+    header h3 { margin: 0; font-size: 22px; }
+    header p { margin: 6px 0 0; font-size: 14px; opacity: 0.95; }
+
+    .content { padding: 24px; }
+
+    input, button {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 14px;
+      border: 1px solid #d1fae5;
+      box-sizing: border-box;
+    }
+
+    input { margin-bottom: 10px; }
+
+    button {
+      background: linear-gradient(135deg, #16a34a, #4ade80);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .result {
+      margin-top: 14px;
+      padding: 12px;
+      background: #ecfdf5;
+      border-radius: 14px;
+      text-align: center;
+      font-size: 15px;
+    }
+
     .error { color: #dc2626; }
 
     /* ===== SƠ ĐỒ SÂN KHẤU ===== */
-    .stage { background:#ef4444; color:white; text-align:center; padding:6px; font-weight:600; border-radius:8px; }
-    .entrance { background:#facc15; text-align:center; padding:6px; border-radius:8px; margin-top:10px; font-weight:600; }
-    .hall { margin-top:12px; }
-    .row { display:flex; align-items:center; margin-bottom:6px; }
-    .row-label { width:60px; font-size:12px; }
-    .lanes { display:flex; flex:1; justify-content:center; gap:16px; }
-    .table { width:60px; height:34px; background:#d1fae5; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:14px; border:2px solid transparent; }
-    .table.highlight { border-color:#ef4444; box-shadow:0 0 10px rgba(239,68,68,0.9); animation:pulse 1.2s infinite; background:#fee2e2; }
-    @keyframes pulse { 0% { transform:scale(1); } 50% { transform:scale(1.1); } 100% { transform:scale(1); } }
-    footer { text-align:center; padding:12px; font-size:12px; color:#6b7280; background:#fafafa; }
+    .hall { margin-top: 20px; }
+
+    .stage {
+      background: #15803d;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-weight: 700;
+      border-radius: 14px;
+      letter-spacing: 1px;
+    }
+
+    .entrance {
+      background: #facc15;
+      text-align: center;
+      padding: 10px;
+      border-radius: 14px;
+      margin-top: 18px;
+      font-weight: 700;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      margin: 18px 0;
+    }
+
+    .row-label {
+      width: 70px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #166534;
+    }
+
+    .lanes {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      gap: 28px;
+    }
+
+    .table {
+      width: 72px;
+      height: 44px;
+      background: #dcfce7;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 600;
+      color: #166534;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .table.highlight {
+      background: #22c55e;
+      color: white;
+      border-color: #15803d;
+      box-shadow: 0 0 20px rgba(34,197,94,0.9);
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    footer {
+      text-align: center;
+      padding: 14px;
+      font-size: 12px;
+      color: #166534;
+      background: #f0fdf4;
+    }
   </style>
 </head>
 <body>
 <div class="container">
   <header>
-    <h3>🌸 Tra cứu bàn tiệc 🌸</h3>
+    <h3>🌿 Tra cứu bàn tiệc 🌿</h3>
     <p>Nhập tên để xem vị trí & số may mắn</p>
   </header>
 
@@ -40,9 +159,8 @@
     <div id="result" class="result"></div>
 
     <div class="hall">
-      <div class="stage">SÂN KHẤU TIỆC</div>
+      <div class="stage">SÂN KHẤU</div>
 
-      <!-- HÀNG 1: THỨ TỰ 3 - 1 - 2 - 4 -->
       <div class="row"><div class="row-label">HÀNG 1</div><div class="lanes">
         <div class="table" data-ban="3">3</div>
         <div class="table" data-ban="1">1</div>
@@ -50,42 +168,33 @@
         <div class="table" data-ban="4">4</div>
       </div></div>
 
-      <!-- HÀNG 2 -->
       <div class="row"><div class="row-label">HÀNG 2</div><div class="lanes">
         <div class="table" data-ban="5">5</div><div class="table" data-ban="6">6</div><div class="table" data-ban="7">7</div>
       </div></div>
-      <!-- HÀNG 3 -->
       <div class="row"><div class="row-label">HÀNG 3</div><div class="lanes">
         <div class="table" data-ban="8">8</div><div class="table" data-ban="9">9</div><div class="table" data-ban="10">10</div>
       </div></div>
-      <!-- HÀNG 4 -->
       <div class="row"><div class="row-label">HÀNG 4</div><div class="lanes">
         <div class="table" data-ban="11">11</div><div class="table" data-ban="12">12</div><div class="table" data-ban="13">13</div>
       </div></div>
-      <!-- HÀNG 5 -->
       <div class="row"><div class="row-label">HÀNG 5</div><div class="lanes">
         <div class="table" data-ban="14">14</div><div class="table" data-ban="15">15</div><div class="table" data-ban="16">16</div>
       </div></div>
-      <!-- HÀNG 6 -->
       <div class="row"><div class="row-label">HÀNG 6</div><div class="lanes">
         <div class="table" data-ban="17">17</div><div class="table" data-ban="18">18</div><div class="table" data-ban="19">19</div>
       </div></div>
-      <!-- HÀNG 7 -->
       <div class="row"><div class="row-label">HÀNG 7</div><div class="lanes">
         <div class="table" data-ban="20">20</div><div class="table" data-ban="21">21</div><div class="table" data-ban="22">22</div>
       </div></div>
-      <!-- HÀNG 8 -->
       <div class="row"><div class="row-label">HÀNG 8</div><div class="lanes">
         <div class="table" data-ban="23">23</div><div class="table" data-ban="24">24</div><div class="table" data-ban="25">25</div>
-      </div></div><div class="lanes">
-        <div class="table" data-ban="29">29</div><div class="table" data-ban="30">30</div><div class="table" data-ban="31">31</div><div class="table" data-ban="32">32</div>
       </div></div>
 
       <div class="entrance">CỬA RA VÀO</div>
     </div>
   </div>
 
-  <footer>Vui lòng tìm bàn được tô sáng</footer>
+  <footer>💚 Chúc quý khách có một buổi tiệc vui vẻ</footer>
 </div>
 
 <script>
@@ -107,7 +216,7 @@
     const info = data[user];
 
     if (!info) {
-      document.getElementById('result').innerHTML = '<div class="error">❌ Không tìm thấy thông tin</div>';
+      document.getElementById('result').innerHTML = '<span class="error">❌ Không tìm thấy thông tin</span>';
       return;
     }
 
