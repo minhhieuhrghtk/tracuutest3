@@ -195,11 +195,11 @@
     .then(res => res.text())
     .then(text => {
       text.trim().split(/\r?\n/).forEach(line => {
-        const [user, ban] = line.split(',');
+        const [user, ban, lucky] = line.split(',');
         if (!user || !ban) return;
         const u = user.trim();
         const b = ban.trim();
-        userMap[u.toLowerCase()] = b;
+        userMap[u.toLowerCase()] = { ban: b, lucky: lucky ? lucky.trim() : '' };()] = b;
         if (!guestsByTable[b]) guestsByTable[b] = [];
         guestsByTable[b].push(u);
       });
@@ -214,17 +214,19 @@
     document.getElementById('guestList').style.display = 'none';
 
     const user = document.getElementById('username').value.trim().toLowerCase();
-    const ban = userMap[user];
+    const info = userMap[user];
 
-    if (!ban) {
+    if (!info) {
       document.getElementById('result').innerHTML = '❌ Không tìm thấy thông tin';
       return;
     }
 
+    const ban = info.ban;
+    const lucky = info.lucky;
     const table = document.querySelector(`.table[data-ban="${ban}"]`);
     if (table) table.classList.add('highlight');
 
-    document.getElementById('result').innerHTML = `🎉 <b>${user}</b> – Bàn <b>${ban}</b><br>👉 Nhấn vào bàn để xem danh sách khách`;
+    document.getElementById('result').innerHTML = `🎉 <b>${user}</b> – Bàn <b>${ban}</b><br>🍀 Số may mắn: <b>${lucky || '—'}</b><br>👉 Nhấn vào bàn để xem danh sách khách`;
   }
 
   function showGuests(ban) {
