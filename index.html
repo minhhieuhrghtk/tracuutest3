@@ -5,77 +5,25 @@
   <title>Tra cứu bàn tiệc</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: radial-gradient(circle at top, #fdf2f8, #c7d2fe);
-      min-height: 100vh;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .container {
-      background: #ffffff;
-      max-width: 520px;
-      width: 100%;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-      overflow: hidden;
-    }
-    header {
-      background: linear-gradient(135deg, #ec4899, #8b5cf6);
-      color: white;
-      padding: 18px;
-      text-align: center;
-    }
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; background: radial-gradient(circle at top, #fdf2f8, #c7d2fe); min-height: 100vh; margin: 0; display: flex; justify-content: center; align-items: center; }
+    .container { background: #ffffff; max-width: 560px; width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); overflow: hidden; }
+    header { background: linear-gradient(135deg, #ec4899, #8b5cf6); color: white; padding: 18px; text-align: center; }
     .content { padding: 18px; }
-    input, button {
-      width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      border-radius: 12px;
-      border: 1px solid #d1d5db;
-      box-sizing: border-box;
-    }
-    button {
-      margin-top: 10px;
-      background: linear-gradient(135deg, #8b5cf6, #6366f1);
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    .result { margin-top: 14px; }
-    .error { color: #dc2626; text-align:center; }
+    input, button { width: 100%; padding: 12px; font-size: 16px; border-radius: 12px; border: 1px solid #d1d5db; box-sizing: border-box; }
+    button { margin-top: 10px; background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none; cursor: pointer; }
+    .result { margin-top: 10px; text-align:center; }
+    .error { color: #dc2626; }
 
-    /* ===== SƠ ĐỒ SÂN KHẤU BẰNG CODE ===== */
+    /* ===== SƠ ĐỒ SÂN KHẤU ===== */
     .stage { background:#ef4444; color:white; text-align:center; padding:6px; font-weight:600; border-radius:8px; }
-    .entrance { background:#facc15; text-align:center; padding:6px; border-radius:8px; margin-top:8px; font-weight:600; }
+    .entrance { background:#facc15; text-align:center; padding:6px; border-radius:8px; margin-top:10px; font-weight:600; }
     .hall { margin-top:12px; }
     .row { display:flex; align-items:center; margin-bottom:6px; }
     .row-label { width:60px; font-size:12px; }
     .lanes { display:flex; flex:1; justify-content:space-around; }
-    .table {
-      width:60px;
-      height:32px;
-      background:#d1fae5;
-      border-radius:6px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:13px;
-      border:2px solid transparent;
-    }
-    .table.highlight {
-      border-color:#ef4444;
-      box-shadow:0 0 10px rgba(239,68,68,0.9);
-      animation:pulse 1.2s infinite;
-      background:#fee2e2;
-    }
-    @keyframes pulse {
-      0% { transform:scale(1); }
-      50% { transform:scale(1.1); }
-      100% { transform:scale(1); }
-    }
+    .table { width:60px; height:34px; background:#d1fae5; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:14px; border:2px solid transparent; }
+    .table.highlight { border-color:#ef4444; box-shadow:0 0 10px rgba(239,68,68,0.9); animation:pulse 1.2s infinite; background:#fee2e2; }
+    @keyframes pulse { 0% { transform:scale(1); } 50% { transform:scale(1.1); } 100% { transform:scale(1); } }
     footer { text-align:center; padding:12px; font-size:12px; color:#6b7280; background:#fafafa; }
   </style>
 </head>
@@ -83,21 +31,53 @@
 <div class="container">
   <header>
     <h3>🌸 Tra cứu bàn tiệc 🌸</h3>
-    <p>Nhập tên để xem vị trí ngồi</p>
+    <p>Nhập tên để xem vị trí & số may mắn</p>
   </header>
 
   <div class="content">
     <input id="username" placeholder="Ví dụ: an, binh..." onkeydown="if(event.key==='Enter') traCuu()" />
     <button onclick="traCuu()">Tra cứu</button>
-    <div id="result"></div>
+    <div id="result" class="result"></div>
 
-    <div class="hall" id="hall">
+    <div class="hall">
       <div class="stage">SÂN KHẤU TIỆC</div>
 
-      <div class="row"><div class="row-label">HÀNG 1</div><div class="lanes"><div class="table" data-ban="1">1</div><div class="table" data-ban="2">2</div><div class="table" data-ban="3">3</div></div></div>
-      <div class="row"><div class="row-label">HÀNG 2</div><div class="lanes"><div class="table" data-ban="4">4</div><div class="table" data-ban="5">5</div><div class="table" data-ban="6">6</div></div></div>
-      <div class="row"><div class="row-label">HÀNG 3</div><div class="lanes"><div class="table" data-ban="7">7</div><div class="table" data-ban="8">8</div><div class="table" data-ban="9">9</div></div></div>
-      <div class="row"><div class="row-label">HÀNG 4</div><div class="lanes"><div class="table" data-ban="10">10</div><div class="table" data-ban="11">11</div><div class="table" data-ban="12">12</div></div></div>
+      <!-- HÀNG 1: THỨ TỰ 3 - 1 - 2 - 4 -->
+      <div class="row"><div class="row-label">HÀNG 1</div><div class="lanes">
+        <div class="table" data-ban="3">3</div>
+        <div class="table" data-ban="1">1</div>
+        <div class="table" data-ban="2">2</div>
+        <div class="table" data-ban="4">4</div>
+      </div></div>
+
+      <!-- HÀNG 2 -->
+      <div class="row"><div class="row-label">HÀNG 2</div><div class="lanes">
+        <div class="table" data-ban="5">5</div><div class="table" data-ban="6">6</div><div class="table" data-ban="7">7</div><div class="table" data-ban="8">8</div>
+      </div></div>
+      <!-- HÀNG 3 -->
+      <div class="row"><div class="row-label">HÀNG 3</div><div class="lanes">
+        <div class="table" data-ban="9">9</div><div class="table" data-ban="10">10</div><div class="table" data-ban="11">11</div><div class="table" data-ban="12">12</div>
+      </div></div>
+      <!-- HÀNG 4 -->
+      <div class="row"><div class="row-label">HÀNG 4</div><div class="lanes">
+        <div class="table" data-ban="13">13</div><div class="table" data-ban="14">14</div><div class="table" data-ban="15">15</div><div class="table" data-ban="16">16</div>
+      </div></div>
+      <!-- HÀNG 5 -->
+      <div class="row"><div class="row-label">HÀNG 5</div><div class="lanes">
+        <div class="table" data-ban="17">17</div><div class="table" data-ban="18">18</div><div class="table" data-ban="19">19</div><div class="table" data-ban="20">20</div>
+      </div></div>
+      <!-- HÀNG 6 -->
+      <div class="row"><div class="row-label">HÀNG 6</div><div class="lanes">
+        <div class="table" data-ban="21">21</div><div class="table" data-ban="22">22</div><div class="table" data-ban="23">23</div><div class="table" data-ban="24">24</div>
+      </div></div>
+      <!-- HÀNG 7 -->
+      <div class="row"><div class="row-label">HÀNG 7</div><div class="lanes">
+        <div class="table" data-ban="25">25</div><div class="table" data-ban="26">26</div><div class="table" data-ban="27">27</div><div class="table" data-ban="28">28</div>
+      </div></div>
+      <!-- HÀNG 8 -->
+      <div class="row"><div class="row-label">HÀNG 8</div><div class="lanes">
+        <div class="table" data-ban="29">29</div><div class="table" data-ban="30">30</div><div class="table" data-ban="31">31</div><div class="table" data-ban="32">32</div>
+      </div></div>
 
       <div class="entrance">CỬA RA VÀO</div>
     </div>
@@ -109,32 +89,30 @@
 <script>
   const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTnWMIpqfGOMbFPWl4_8JIBEpqnv71DmrsBimq6bxEQO8FAPVeI1X2NuVqFH-qxmBn9TPs5e2eunJ7O/pub?gid=0&single=true&output=csv";
   const data = {};
-  const resultDiv = document.getElementById('result');
 
   fetch(SHEET_URL)
     .then(res => res.text())
     .then(text => {
       text.trim().split(/\r?\n/).forEach(line => {
-        const [user, ban] = line.split(',');
-        if (user && ban) data[user.trim().toLowerCase()] = ban.trim();
+        const [user, ban, mayman] = line.split(',');
+        if (user && ban) data[user.trim().toLowerCase()] = { ban: ban.trim(), mayman: mayman?.trim() };
       });
     });
 
   function traCuu() {
     document.querySelectorAll('.table').forEach(t => t.classList.remove('highlight'));
-
     const user = document.getElementById('username').value.trim().toLowerCase();
-    const ban = data[user];
+    const info = data[user];
 
-    if (!ban) {
-      resultDiv.innerHTML = '<div class="error">❌ Không tìm thấy thông tin</div>';
+    if (!info) {
+      document.getElementById('result').innerHTML = '<div class="error">❌ Không tìm thấy thông tin</div>';
       return;
     }
 
-    const table = document.querySelector(`.table[data-ban="${ban}"]`);
+    const table = document.querySelector(`.table[data-ban="${info.ban}"]`);
     if (table) table.classList.add('highlight');
 
-    resultDiv.innerHTML = `<div style="text-align:center; margin-top:8px;">🎉 <b>${user}</b> – Bàn <b>${ban}</b></div>`;
+    document.getElementById('result').innerHTML = `🎉 <b>${user}</b> – Bàn <b>${info.ban}</b><br>🍀 Số may mắn: <b>${info.mayman || '—'}</b>`;
   }
 </script>
 </body>
