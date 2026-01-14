@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <title>Tra cứu bàn tiệc</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
+      font-family: "Segoe UI", Tahoma, sans-serif;
       background: linear-gradient(135deg, #dcfce7, #bbf7d0);
       min-height: 100vh;
       margin: 0;
@@ -16,8 +17,8 @@
     }
 
     .container {
-      background: #ffffff;
-      max-width: 520px; /* THU NHỎ BẢN ĐỒ */
+      background: #fff;
+      max-width: 520px;
       width: 100%;
       border-radius: 24px;
       box-shadow: 0 25px 50px rgba(0,0,0,0.15);
@@ -33,16 +34,6 @@
 
     .content { padding: 20px; }
 
-    .note {
-      margin-top: 10px;
-      font-size: 13px;
-      background: #ecfdf5;
-      border-left: 4px solid #22c55e;
-      padding: 8px 10px;
-      border-radius: 8px;
-      color: #14532d;
-    }
-
     input, button {
       width: 100%;
       padding: 12px;
@@ -57,6 +48,7 @@
       color: white;
       border: none;
       font-weight: 600;
+      cursor: pointer;
     }
 
     .result {
@@ -65,6 +57,17 @@
       background: #ecfdf5;
       border-radius: 12px;
       text-align: center;
+      font-size: 15px;
+    }
+
+    .note {
+      margin-top: 10px;
+      font-size: 13px;
+      background: #ecfdf5;
+      border-left: 4px solid #22c55e;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #14532d;
     }
 
     /* ===== SƠ ĐỒ ===== */
@@ -78,23 +81,54 @@
       transform-origin: top center;
     }
 
-    .stage { background:#15803d; color:white; text-align:center; padding:8px; border-radius:12px; font-weight:700; }
-    .entrance { background:#facc15; text-align:center; padding:8px; border-radius:12px; margin-top:14px; font-weight:700; }
+    .stage {
+      background:#15803d;
+      color:white;
+      text-align:center;
+      padding:8px;
+      border-radius:12px;
+      font-weight:700;
+      margin-bottom: 8px;
+    }
 
-    .row { display:flex; align-items:center; margin: 14px 0; }
-    .row-label { width:60px; font-size:12px; font-weight:600; color:#166534; }
+    .entrance {
+      background:#facc15;
+      text-align:center;
+      padding:8px;
+      border-radius:12px;
+      margin-top:14px;
+      font-weight:700;
+    }
 
-    .lanes { display:flex; flex:1; justify-content:center; gap:22px; }
+    .row {
+      display:flex;
+      align-items:center;
+      margin: 14px 0;
+    }
+
+    .row-label {
+      width:50px;
+      font-size:12px;
+      font-weight:600;
+      color:#166534;
+    }
+
+    .lanes {
+      display:flex;
+      flex:1;
+      justify-content:center;
+      gap:22px;
+    }
 
     .table {
-      width:64px;
-      height:38px;
+      width:60px;
+      height:36px;
       background:#dcfce7;
       border-radius:10px;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-size:15px;
+      font-size:14px;
       font-weight:600;
       color:#166534;
       cursor:pointer;
@@ -145,6 +179,7 @@
   <div class="content">
     <input id="username" placeholder="Ví dụ: an, binh..." onkeydown="if(event.key==='Enter') traCuu()" />
     <button onclick="traCuu()">Tra cứu</button>
+
     <div id="result" class="result"></div>
     <div class="note">📌 <b>Lưu ý:</b> Vui lòng <b>chụp màn hình</b> sau khi tra cứu để tiện đối chiếu khi vào sảnh.</div>
     <div id="guestList" class="guest-list"></div>
@@ -187,9 +222,11 @@
 </div>
 
 <script>
+  /* ====== THAY LINK CSV GOOGLE SHEET CỦA BẠN ====== */
   const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTnWMIpqfGOMbFPWl4_8JIBEpqnv71DmrsBimq6bxEQO8FAPVeI1X2NuVqFH-qxmBn9TPs5e2eunJ7O/pub?gid=0&single=true&output=csv";
-  const guestsByTable = {};
+
   const userMap = {};
+  const guestsByTable = {};
 
   fetch(SHEET_URL)
     .then(res => res.text())
@@ -197,9 +234,12 @@
       text.trim().split(/\r?\n/).forEach(line => {
         const [user, ban, lucky] = line.split(',');
         if (!user || !ban) return;
+
         const u = user.trim();
         const b = ban.trim();
-        userMap[u.toLowerCase()] = { ban: b, lucky: lucky ? lucky.trim() : '' };()] = b;
+        const l = lucky ? lucky.trim() : '';
+
+        userMap[u.toLowerCase()] = { ban: b, lucky: l };
         if (!guestsByTable[b]) guestsByTable[b] = [];
         guestsByTable[b].push(u);
       });
@@ -209,37 +249,31 @@
     t.addEventListener('click', () => showGuests(t.dataset.ban));
   });
 
- <script>
-function traCuu() {
-  // Xóa highlight cũ
-  document.querySelectorAll('.table').forEach(t => t.classList.remove('highlight'));
-  document.getElementById('guestList').style.display = 'none';
+  function traCuu() {
+    document.querySelectorAll('.table').forEach(t => t.classList.remove('highlight'));
+    document.getElementById('guestList').style.display = 'none';
 
-  const user = document.getElementById('username').value.trim().toLowerCase();
-  const info = userMap[user];
+    const user = document.getElementById('username').value.trim().toLowerCase();
+    const info = userMap[user];
 
-  if (!info) {
-    document.getElementById('result').innerHTML = '❌ Không tìm thấy thông tin';
-    return;
+    if (!info) {
+      document.getElementById('result').innerHTML = '❌ Không tìm thấy thông tin';
+      return;
+    }
+
+    const ban = info.ban;
+    const lucky = info.lucky;
+
+    const table = document.querySelector(`.table[data-ban="${ban}"]`);
+    if (table) table.classList.add('highlight');
+
+    document.getElementById('result').innerHTML = `🎉 <b>${user}</b> – Bàn <b>${ban}</b><br>🍀 Số may mắn: <b>${lucky || '—'}</b><br>👉 Nhấn vào bàn để xem danh sách khách`;
   }
-
-  const ban = info.ban;
-  const lucky = info.lucky;
-
-  const table = document.querySelector(`.table[data-ban="${ban}"]`);
-  if (table) table.classList.add('highlight');
-
-  document.getElementById('result').innerHTML = `
-    🎉 <b>${user}</b> – Bàn <b>${ban}</b><br>
-    🍀 Số may mắn: <b>${lucky || '—'}</b><br>
-    👉 Nhấn vào bàn để xem danh sách khách
-  `;
-}
-</script>
 
   function showGuests(ban) {
     const list = guestsByTable[ban] || [];
     const box = document.getElementById('guestList');
+
     box.innerHTML = `<h4>👥 Khách bàn ${ban}</h4>` + list.map(n => `<div class="guest-item">• ${n}</div>`).join('');
     box.style.display = 'block';
   }
