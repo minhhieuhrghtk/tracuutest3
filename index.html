@@ -33,6 +33,16 @@
 
     .content { padding: 20px; }
 
+    .note {
+      margin-top: 10px;
+      font-size: 13px;
+      background: #ecfdf5;
+      border-left: 4px solid #22c55e;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #14532d;
+    }
+
     input, button {
       width: 100%;
       padding: 12px;
@@ -58,7 +68,15 @@
     }
 
     /* ===== SƠ ĐỒ ===== */
-    .hall { margin-top: 16px; transform: scale(0.9); transform-origin: top center; }
+    .hall {
+      margin-top: 18px;
+      padding: 14px;
+      border: 3px dashed #22c55e;
+      border-radius: 20px;
+      background: #f0fdf4;
+      transform: scale(0.85);
+      transform-origin: top center;
+    }
 
     .stage { background:#15803d; color:white; text-align:center; padding:8px; border-radius:12px; font-weight:700; }
     .entrance { background:#facc15; text-align:center; padding:8px; border-radius:12px; margin-top:14px; font-weight:700; }
@@ -128,6 +146,7 @@
     <input id="username" placeholder="Ví dụ: an, binh..." onkeydown="if(event.key==='Enter') traCuu()" />
     <button onclick="traCuu()">Tra cứu</button>
     <div id="result" class="result"></div>
+    <div class="note">📌 <b>Lưu ý:</b> Vui lòng <b>chụp màn hình</b> sau khi tra cứu để tiện đối chiếu khi vào sảnh.</div>
     <div id="guestList" class="guest-list"></div>
 
     <div class="hall">
