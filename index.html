@@ -128,7 +128,7 @@ button{
 </header>
 
 <div class="content">
-<input id="username" placeholder="Nhập username khách">
+<input id="username" placeholder="Nhập tên khách">
 <button onclick="traCuu()">Tra cứu</button>
 
 <div id="result" class="result"></div>
@@ -138,16 +138,19 @@ button{
 <div class="hall">
 <div class="stage">SÂN KHẤU</div>
 
-<!-- SƠ ĐỒ 27 BÀN – 9 HÀNG -->
+<div class="row"><div class="row-label">H1</div><div class="lanes">
+<div class="table" data-ban="2">2</div>
+<div class="table" data-ban="1">1</div>
+<div class="table" data-ban="3">3</div>
+</div></div>
+
 <script>
-let tableNum = 1;
-for(let row=1; row<=9; row++){
-  document.write('<div class="row">');
-  document.write('<div class="row-label">H'+row+'</div>');
-  document.write('<div class="lanes">');
+let n=4;
+for(let h=2;h<=9;h++){
+  document.write('<div class="row"><div class="row-label">H'+h+'</div><div class="lanes">');
   for(let i=0;i<3;i++){
-    document.write('<div class="table" data-ban="'+tableNum+'">'+tableNum+'</div>');
-    tableNum++;
+    document.write('<div class="table" data-ban="'+n+'">'+n+'</div>');
+    n++;
   }
   document.write('</div></div>');
 }
@@ -161,28 +164,28 @@ for(let row=1; row<=9; row++){
 <script>
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReo557WJ8YlXpCjOrv1RwmBOWksCqGwUZF1i9mS7y1DLHCjjaJ6Fsp9viEoSUvW7bOsj_0FDCM9CHA/pub?gid=1299646787&single=true&output=csv";
 
-const users = {};
+const users={};
 
 fetch(SHEET_CSV_URL)
 .then(r=>r.text())
 .then(t=>{
   t.trim().split(/\r?\n/).slice(1).forEach(l=>{
-    const [u,b,lucky] = l.split(',');
-    if(!u) return;
-    users[u.trim().toLowerCase()] = { ban:b, lucky:lucky };
+    const [u,b,lucky]=l.split(',');
+    if(!u)return;
+    users[u.trim().toLowerCase()]={ban:b,lucky:lucky};
   });
 });
 
 function traCuu(){
   document.querySelectorAll(".table").forEach(t=>t.classList.remove("highlight"));
-  const name = document.getElementById("username").value.trim().toLowerCase();
-  const u = users[name];
+  const name=document.getElementById("username").value.trim().toLowerCase();
+  const u=users[name];
   if(!u){
     result.innerHTML="❌ Không tìm thấy thông tin";
     return;
   }
   document.querySelector(`.table[data-ban="${u.ban}"]`)?.classList.add("highlight");
-  result.innerHTML = `🎉 <b>${name}</b><br>Bàn <b>${u.ban}</b><br>🍀 Số may mắn: <b>${u.lucky||"-"}</b>`;
+  result.innerHTML=`🎉 <b>${name}</b><br>Bàn <b>${u.ban}</b><br>🍀 Số may mắn: <b>${u.lucky||"-"}</b>`;
 }
 </script>
 
