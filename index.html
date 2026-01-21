@@ -17,7 +17,7 @@ body{
 }
 .container{
   background:#fff;
-  max-width:520px;
+  max-width:540px;
   width:100%;
   border-radius:24px;
   box-shadow:0 25px 50px rgba(0,0,0,.15);
@@ -79,20 +79,21 @@ button{
 }
 .row{
   display:flex;
+  justify-content:center;
   align-items:center;
+  gap:14px;
   margin:14px 0;
 }
-.row-label{
-  width:40px;
-  font-size:12px;
+.lanes{
+  display:flex;
+  gap:18px;
+}
+.aisle{
+  width:60px;
+  text-align:center;
+  font-size:11px;
   font-weight:600;
   color:#166534;
-}
-.lanes{
-  flex:1;
-  display:flex;
-  justify-content:center;
-  gap:22px;
 }
 .table{
   width:60px;
@@ -138,23 +139,37 @@ button{
 <div class="hall">
 <div class="stage">SÂN KHẤU</div>
 
-<div class="row"><div class="row-label">H1</div><div class="lanes">
-<div class="table" data-ban="2">2</div>
-<div class="table" data-ban="1">1</div>
-<div class="table" data-ban="3">3</div>
-</div></div>
-
+<!-- HÀNG 1 → 6 (24 BÀN) -->
 <script>
-let n=4;
-for(let h=2;h<=9;h++){
-  document.write('<div class="row"><div class="row-label">H'+h+'</div><div class="lanes">');
-  for(let i=0;i<3;i++){
-    document.write('<div class="table" data-ban="'+n+'">'+n+'</div>');
-    n++;
-  }
-  document.write('</div></div>');
+let ban = 1;
+for(let h=1; h<=6; h++){
+  document.write(`
+    <div class="row">
+      <div class="lanes">
+        <div class="table" data-ban="${ban}">${ban++}</div>
+        <div class="table" data-ban="${ban}">${ban++}</div>
+      </div>
+      <div class="aisle">LỐI ĐI</div>
+      <div class="lanes">
+        <div class="table" data-ban="${ban}">${ban++}</div>
+        <div class="table" data-ban="${ban}">${ban++}</div>
+      </div>
+    </div>
+  `);
 }
 </script>
+
+<!-- HÀNG 7 -->
+<div class="row">
+  <div class="lanes">
+    <div class="table" data-ban="25">25</div>
+    <div class="table" data-ban="26">26</div>
+  </div>
+  <div class="aisle">LỐI ĐI</div>
+  <div class="lanes">
+    <div class="table" data-ban="27">27</div>
+  </div>
+</div>
 
 <div class="entrance">CỬA RA VÀO</div>
 </div>
@@ -164,28 +179,28 @@ for(let h=2;h<=9;h++){
 <script>
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vReo557WJ8YlXpCjOrv1RwmBOWksCqGwUZF1i9mS7y1DLHCjjaJ6Fsp9viEoSUvW7bOsj_0FDCM9CHA/pub?gid=1299646787&single=true&output=csv";
 
-const users={};
+const users = {};
 
 fetch(SHEET_CSV_URL)
 .then(r=>r.text())
 .then(t=>{
   t.trim().split(/\r?\n/).slice(1).forEach(l=>{
-    const [u,b,lucky]=l.split(',');
-    if(!u)return;
-    users[u.trim().toLowerCase()]={ban:b,lucky:lucky};
+    const [u,b,lucky] = l.split(',');
+    if(!u) return;
+    users[u.trim().toLowerCase()] = { ban:b, lucky:lucky };
   });
 });
 
 function traCuu(){
   document.querySelectorAll(".table").forEach(t=>t.classList.remove("highlight"));
-  const name=document.getElementById("username").value.trim().toLowerCase();
-  const u=users[name];
+  const name = document.getElementById("username").value.trim().toLowerCase();
+  const u = users[name];
   if(!u){
-    result.innerHTML="❌ Không tìm thấy thông tin";
+    result.innerHTML = "❌ Không tìm thấy thông tin";
     return;
   }
   document.querySelector(`.table[data-ban="${u.ban}"]`)?.classList.add("highlight");
-  result.innerHTML=`🎉 <b>${name}</b><br>Bàn <b>${u.ban}</b><br>🍀 Số may mắn: <b>${u.lucky||"-"}</b>`;
+  result.innerHTML = `🎉 <b>${name}</b><br>Bàn <b>${u.ban}</b><br>🍀 Số may mắn: <b>${u.lucky||"-"}</b>`;
 }
 </script>
 
